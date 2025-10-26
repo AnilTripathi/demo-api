@@ -1,0 +1,53 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: myhealth
+  datasource:
+    url: jdbc:postgresql://localhost:5432/myhealthapi?currentSchema=myhealth_schema
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:user}
+    password: ${DB_PASSWORD:password}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 2
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 20000
+      leak-detection-threshold: 60000
+      pool-name: MyHealthHikariPool
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  secret: ${JWT_SECRET:change_this_in_prod_use_at_least_32_chars_for_security}
+  access-token-expiration-ms: 900000  # 15 minutes
+  refresh-token-expiration-ms: 604800000  # 7 days
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+  info:
+    title: ${API_TITLE:MyHealth API}
+    description: ${API_DESCRIPTION:REST API for MyHealth application with JWT authentication}
+    version: ${API_VERSION:1.0.0}
+    contact:
+      name: ${API_CONTACT_NAME:MyHealth Team}
+      email: ${API_CONTACT_EMAIL:support@myhealth.com}
+    license:
+      name: ${API_LICENSE:MIT}
+      url: ${API_LICENSE_URL:https://opensource.org/licenses/MIT}
+  servers:
+    - url: ${API_SERVER_DEV:http://localhost:8089}
+      description: Development server
+    - url: ${API_SERVER_STAGING:https://staging.myhealth.com}
+      description: Staging server
+    - url: ${API_SERVER_PROD:https://api.myhealth.com}
+      description: Production server

@@ -1,0 +1,9 @@
+// Gradle example for adding Springdoc OpenAPI dependency
+// Add this to your build.gradle dependencies block
+
+dependencies {
+    // Springdoc OpenAPI for Spring Boot 3.x
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+    
+    // Other dependencies...
+}

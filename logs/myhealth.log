@@ -1,0 +1,144 @@
+2025-10-26 15:23:01.087 [restartedMain] INFO  com.myhealth.MyhealthApplication - Starting MyhealthApplication using Java 21.0.2 with PID 68563 (/Users/aniltripathi/Desktop/Work/myhealth-api/target/classes started by aniltripathi in /Users/aniltripathi/Desktop/Work/myhealth-api)
+2025-10-26 15:23:01.088 [restartedMain] INFO  com.myhealth.MyhealthApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-26 15:23:02.220 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-26 15:23:02.259 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37 ms. Found 6 JPA repository interfaces.
+2025-10-26 15:23:02.458 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-10-26 15:23:02.460 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-26 15:23:02.460 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-10-26 15:23:02.480 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-26 15:23:02.481 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1385 ms
+2025-10-26 15:23:02.598 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Starting...
+2025-10-26 15:23:02.643 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - MyHealthHikariPool - Added connection org.postgresql.jdbc.PgConnection@7b553c59
+2025-10-26 15:23:02.644 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Start completed.
+2025-10-26 15:23:02.648 [restartedMain] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://localhost:5432/myhealthapi?currentSchema=myhealth_schema (PostgreSQL 16.0)
+2025-10-26 15:23:02.688 [restartedMain] INFO  org.flywaydb.core.internal.command.DbValidate - Successfully validated 2 migrations (execution time 00:00.009s)
+2025-10-26 15:23:02.732 [restartedMain] INFO  org.flywaydb.core.internal.command.DbMigrate - Current version of schema "myhealth_schema": 2
+2025-10-26 15:23:02.733 [restartedMain] INFO  org.flywaydb.core.internal.command.DbMigrate - Schema "myhealth_schema" is up to date. No migration necessary.
+2025-10-26 15:23:02.777 [restartedMain] INFO  o.s.o.j.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-26 15:23:02.785 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-26 15:23:02.987 [restartedMain] INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-26 15:23:03.280 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-10-26 15:23:03.280 [restartedMain] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-10-26 15:23:03.312 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-26 15:23:03.415 [restartedMain] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-10-26 15:23:03.449 [restartedMain] INFO  o.s.v.beanvalidation.OptionalValidatorFactoryBean - Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-10-26 15:23:03.554 [restartedMain] INFO  o.s.b.autoconfigure.h2.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:postgresql://localhost:5432/myhealthapi?currentSchema=myhealth_schema'
+2025-10-26 15:23:03.559 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-10-26 15:23:03.574 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-10-26 15:23:03.584 [restartedMain] INFO  com.myhealth.MyhealthApplication - Started MyhealthApplication in 2.622 seconds (process running for 1754.944)
+2025-10-26 15:23:03.590 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation delta:
+
+
+==========================
+CONDITION EVALUATION DELTA
+==========================
+
+
+Positive matches:
+-----------------
+
+   LogFileWebEndpointAutoConfiguration#logFileWebEndpoint matched:
+      - Log File found logging.file.name logs/myhealth.log (LogFileWebEndpointAutoConfiguration.LogFileCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.boot.actuate.logging.LogFileWebEndpoint; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+
+Negative matches:
+-----------------
+
+    None
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    None
+
+
+
+2025-10-26 15:23:12.047 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-10-26 15:23:12.049 [Thread-11] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-26 15:23:12.052 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-10-26 15:23:12.057 [Thread-11] INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-26 15:23:12.058 [Thread-11] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Shutdown initiated...
+2025-10-26 15:23:12.060 [Thread-11] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Shutdown completed.
+2025-10-26 15:23:12.186 [restartedMain] INFO  com.myhealth.MyhealthApplication - Starting MyhealthApplication using Java 21.0.2 with PID 68563 (/Users/aniltripathi/Desktop/Work/myhealth-api/target/classes started by aniltripathi in /Users/aniltripathi/Desktop/Work/myhealth-api)
+2025-10-26 15:23:12.187 [restartedMain] INFO  com.myhealth.MyhealthApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-26 15:23:12.733 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-26 15:23:12.761 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 26 ms. Found 6 JPA repository interfaces.
+2025-10-26 15:23:12.898 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-10-26 15:23:12.899 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-26 15:23:12.899 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-10-26 15:23:12.911 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-26 15:23:12.911 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 722 ms
+2025-10-26 15:23:12.977 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Starting...
+2025-10-26 15:23:12.997 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - MyHealthHikariPool - Added connection org.postgresql.jdbc.PgConnection@1519c6f
+2025-10-26 15:23:12.998 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Start completed.
+2025-10-26 15:23:13.001 [restartedMain] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://localhost:5432/myhealthapi?currentSchema=myhealth_schema (PostgreSQL 16.0)
+2025-10-26 15:23:13.037 [restartedMain] INFO  org.flywaydb.core.internal.command.DbValidate - Successfully validated 2 migrations (execution time 00:00.025s)
+2025-10-26 15:23:13.087 [restartedMain] INFO  org.flywaydb.core.internal.command.DbMigrate - Current version of schema "myhealth_schema": 2
+2025-10-26 15:23:13.087 [restartedMain] INFO  org.flywaydb.core.internal.command.DbMigrate - Schema "myhealth_schema" is up to date. No migration necessary.
+2025-10-26 15:23:13.141 [restartedMain] INFO  o.s.o.j.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-26 15:23:13.147 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-26 15:23:13.430 [restartedMain] INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-26 15:23:13.647 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-10-26 15:23:13.647 [restartedMain] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-10-26 15:23:13.708 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-26 15:23:13.860 [restartedMain] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-10-26 15:23:13.925 [restartedMain] INFO  o.s.v.beanvalidation.OptionalValidatorFactoryBean - Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-10-26 15:23:14.085 [restartedMain] INFO  o.s.b.autoconfigure.h2.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:postgresql://localhost:5432/myhealthapi?currentSchema=myhealth_schema'
+2025-10-26 15:23:14.090 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-10-26 15:23:14.109 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-10-26 15:23:14.117 [restartedMain] INFO  com.myhealth.MyhealthApplication - Started MyhealthApplication in 1.969 seconds (process running for 1765.477)
+2025-10-26 15:23:14.119 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-10-26 15:23:27.626 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-10-26 15:23:27.629 [Thread-15] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-26 15:23:27.633 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-10-26 15:23:27.639 [Thread-15] INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-26 15:23:27.640 [Thread-15] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Shutdown initiated...
+2025-10-26 15:23:27.642 [Thread-15] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Shutdown completed.
+2025-10-26 15:27:10.664 [restartedMain] INFO  com.myhealth.MyhealthApplication - Starting MyhealthApplication using Java 21.0.2 with PID 99787 (/Users/aniltripathi/Desktop/Work/myhealth-api/target/classes started by aniltripathi in /Users/aniltripathi/Desktop/Work/myhealth-api)
+2025-10-26 15:27:10.670 [restartedMain] INFO  com.myhealth.MyhealthApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-26 15:27:10.810 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-10-26 15:27:10.811 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-10-26 15:27:12.689 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-26 15:27:12.763 [restartedMain] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 64 ms. Found 6 JPA repository interfaces.
+2025-10-26 15:27:13.433 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2025-10-26 15:27:13.449 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-26 15:27:13.450 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-10-26 15:27:13.498 [restartedMain] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-26 15:27:13.498 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2686 ms
+2025-10-26 15:27:13.836 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Starting...
+2025-10-26 15:27:14.037 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - MyHealthHikariPool - Added connection org.postgresql.jdbc.PgConnection@26bea98c
+2025-10-26 15:27:14.039 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Start completed.
+2025-10-26 15:27:14.073 [restartedMain] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://localhost:5432/myhealthapi?currentSchema=myhealth_schema (PostgreSQL 16.0)
+2025-10-26 15:27:14.147 [restartedMain] INFO  org.flywaydb.core.internal.command.DbValidate - Successfully validated 2 migrations (execution time 00:00.048s)
+2025-10-26 15:27:14.209 [restartedMain] INFO  org.flywaydb.core.internal.command.DbMigrate - Current version of schema "myhealth_schema": 2
+2025-10-26 15:27:14.212 [restartedMain] INFO  org.flywaydb.core.internal.command.DbMigrate - Schema "myhealth_schema" is up to date. No migration necessary.
+2025-10-26 15:27:14.714 [restartedMain] INFO  o.s.o.j.persistenceunit.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-26 15:27:14.776 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-26 15:27:16.050 [restartedMain] INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-26 15:27:16.714 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-10-26 15:27:16.714 [restartedMain] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-10-26 15:27:16.863 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-26 15:27:17.252 [restartedMain] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2025-10-26 15:27:17.446 [restartedMain] INFO  o.s.v.beanvalidation.OptionalValidatorFactoryBean - Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-10-26 15:27:18.004 [restartedMain] INFO  o.s.b.autoconfigure.h2.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:postgresql://localhost:5432/myhealthapi?currentSchema=myhealth_schema'
+2025-10-26 15:27:18.038 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-10-26 15:27:18.269 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8089 (http) with context path '/'
+2025-10-26 15:27:18.293 [restartedMain] INFO  com.myhealth.MyhealthApplication - Started MyhealthApplication in 8.275 seconds (process running for 9.263)
+2025-10-26 15:27:19.346 [RMI TCP Connection(2)-127.0.0.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-26 15:27:19.347 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-10-26 15:27:19.350 [RMI TCP Connection(2)-127.0.0.1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-10-26 15:27:40.532 [http-nio-8089-exec-10] INFO  org.springdoc.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 385 ms
+2025-10-26 15:31:46.922 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-10-26 15:31:46.931 [Thread-5] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-10-26 15:31:46.945 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-10-26 15:31:46.971 [Thread-5] INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-26 15:31:46.987 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Shutdown initiated...
+2025-10-26 15:31:46.995 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - MyHealthHikariPool - Shutdown completed.

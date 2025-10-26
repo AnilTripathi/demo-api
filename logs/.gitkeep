@@ -1,0 +1,2 @@
+# Keep logs directory in git but ignore log files
+# Log files are generated at runtime

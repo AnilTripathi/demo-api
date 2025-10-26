@@ -1,0 +1,6 @@
+# Default test configuration
+# This file ensures tests use the 'test' profile by default
+
+spring:
+  profiles:
+    active: test

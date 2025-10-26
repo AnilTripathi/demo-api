@@ -1,0 +1,88 @@
+# Test Profile Configuration
+# This configuration is automatically loaded when running tests with @ActiveProfiles("test")
+
+server:
+  port: 0  # Random available port for tests
+
+spring:
+  application:
+    name: myhealth-test
+    
+  # In-memory H2 database for testing
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      idle-timeout: 30000
+      max-lifetime: 60000
+      connection-timeout: 5000
+      
+  # JPA/Hibernate configuration for tests
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false  # Set to true for debugging SQL queries
+    database-platform: org.hibernate.dialect.H2Dialect
+    
+  # H2 Console (useful for debugging tests)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      
+  # Flyway disabled for tests (using create-drop instead)
+  flyway:
+    enabled: false
+
+# JWT Configuration for tests
+jwt:
+  secret: test-secret-key-for-testing-only-32-chars
+  access-token-expiration-ms: 60000   # 1 minute for faster test cycles
+  refresh-token-expiration-ms: 300000 # 5 minutes for faster test cycles
+
+# OpenAPI/Swagger configuration for tests
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: false  # Disable UI in tests
+  info:
+    title: MyHealth API - Test Environment
+    description: Test configuration for MyHealth API
+    version: test-1.0.0
+    contact:
+      name: Test Team
+      email: test@myhealth.com
+
+# Logging configuration
+logging:
+  level:
+    root: ${LOGGING_LEVEL_ROOT:INFO}
+    com.myhealth: ${LOGGING_LEVEL_APP:INFO}
+    org.springframework: ${LOGGING_LEVEL_SPRING:INFO}
+    org.springframework.security: ${LOGGING_LEVEL_SECURITY:INFO}
+    org.springframework.web: ${LOGGING_LEVEL_WEB:INFO}
+    org.hibernate: ${LOGGING_LEVEL_HIBERNATE:WARN}
+    org.hibernate.SQL: ${LOGGING_LEVEL_SQL:WARN}
+    org.flywaydb: ${LOGGING_LEVEL_FLYWAY:INFO}
+    com.zaxxer.hikari: ${LOGGING_LEVEL_HIKARI:INFO}
+    io.jsonwebtoken: ${LOGGING_LEVEL_JWT:INFO}
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+  file:
+    name: ${LOGGING_FILE:logs/myhealth.log}
+
+# Test-specific properties
+test:
+  environment: test
+  mock-external-services: true
+  api:
+    base-url: http://localhost:${server.port}
+  database:
+    cleanup-after-test: true
