@@ -83,7 +83,7 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     public boolean validateToken(String token) {
         try {
             parseClaims(token);
-            return !isTokenExpired(token);
+            return true;
         } catch (JwtException e) {
             return false;
         }

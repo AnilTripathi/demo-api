@@ -38,21 +38,25 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public AuthResponse login(AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                authRequest.getUsername(), 
-                authRequest.getPassword()
-            )
-        );
-        
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = userRepository.findByUsername(userDetails.getUsername())
-                .orElseThrow(() -> new ApiException("User not found", HttpStatus.NOT_FOUND));
-        
-        String accessToken = jwtTokenService.generateAccessToken(userDetails);
-        String refreshToken = jwtTokenService.generateRefreshToken(user.getId());
-        
-        return new AuthResponse(accessToken, refreshToken, accessTokenExpirationMs);
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    authRequest.getUsername(), 
+                    authRequest.getPassword()
+                )
+            );
+            
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            User user = userRepository.findByUsername(userDetails.getUsername())
+                    .orElseThrow(() -> new ApiException("User not found", HttpStatus.NOT_FOUND));
+            
+            String accessToken = jwtTokenService.generateAccessToken(userDetails);
+            String refreshToken = jwtTokenService.generateRefreshToken(user.getId());
+            
+            return new AuthResponse(accessToken, refreshToken, accessTokenExpirationMs);
+        } catch (org.springframework.security.core.AuthenticationException e) {
+            throw new ApiException("Invalid username or password", HttpStatus.BAD_REQUEST);
+        }
     }
     
     @Override

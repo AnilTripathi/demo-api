@@ -31,7 +31,7 @@ public class AuthController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Login successful",
                 content = @Content(schema = @Schema(implementation = AuthResponse.class))),
-        @ApiResponse(responseCode = "401", description = "Invalid credentials",
+        @ApiResponse(responseCode = "400", description = "Invalid username or password",
                 content = @Content(schema = @Schema(implementation = com.myhealth.dto.ApiError.class)))
     })
     @PostMapping("/login")

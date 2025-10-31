@@ -6,6 +6,7 @@ import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -62,6 +63,21 @@ public class GlobalExceptionHandler {
         );
         
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(apiError);
+    }
+    
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiError> handleAuthenticationException(AuthenticationException ex, WebRequest request) {
+        log.error("Authentication Exception: {}", ex.getMessage());
+        
+        ApiError apiError = new ApiError(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            request.getDescription(false).replace("uri=", ""),
+            "Invalid username or password",
+            Collections.singletonList("AUTHENTICATION_FAILED")
+        );
+        
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
     
     @ExceptionHandler(MethodArgumentNotValidException.class)
