@@ -2,6 +2,9 @@ package com.myhealth.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myhealth.dto.ApiError;
+import com.myhealth.entity.User;
+import com.myhealth.repository.UserRepository;
+import com.myhealth.security.ApiUserDetail;
 import com.myhealth.service.JwtTokenService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -15,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -33,6 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     
     private final JwtTokenService jwtTokenService;
     private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
     
     @Override
@@ -41,8 +45,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             String jwt = parseJwt(request);
             if (jwt != null) {
-                String username = jwtTokenService.getUsername(jwt);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                UUID userId = jwtTokenService.getUserId(jwt);
+                User user = userRepository.findById(userId)
+                        .orElseThrow(() -> new RuntimeException("User not found"));
+                
+                ApiUserDetail userDetails = (ApiUserDetail) userDetailsService.loadUserByUsername(user.getUsername());
                 
                 UsernamePasswordAuthenticationToken authentication = 
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

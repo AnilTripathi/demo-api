@@ -100,4 +100,34 @@ public class GlobalExceptionHandler {
         
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
+    
+    @ExceptionHandler(org.springframework.web.server.ResponseStatusException.class)
+    public ResponseEntity<ApiError> handleResponseStatusException(org.springframework.web.server.ResponseStatusException ex, WebRequest request) {
+        log.error("Response Status Exception: {}", ex.getMessage());
+        
+        ApiError apiError = new ApiError(
+            LocalDateTime.now(),
+            ex.getStatusCode().value(),
+            request.getDescription(false).replace("uri=", ""),
+            ex.getReason() != null ? ex.getReason() : "An error occurred",
+            Collections.singletonList(ex.getStatusCode().toString())
+        );
+        
+        return ResponseEntity.status(ex.getStatusCode()).body(apiError);
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleGenericException(Exception ex, WebRequest request) {
+        log.error("Unexpected Exception: {}", ex.getMessage(), ex);
+        
+        ApiError apiError = new ApiError(
+            LocalDateTime.now(),
+            HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            request.getDescription(false).replace("uri=", ""),
+            "An unexpected error occurred",
+            Collections.singletonList("INTERNAL_SERVER_ERROR")
+        );
+        
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
+    }
 }

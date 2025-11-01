@@ -2,6 +2,7 @@ package com.myhealth.impl;
 
 import com.myhealth.projection.UserLoginProjection;
 import com.myhealth.repository.UserRepository;
+import com.myhealth.security.ApiUserDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,15 +33,16 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
         
         log.debug("User found with roles: {}", userProjection.getRoles());
         
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(userProjection.getUsername())
-                .password(userProjection.getPassword())
-                .authorities(parseRoles(userProjection.getRoles()))
-                .accountExpired(!Boolean.TRUE.equals(userProjection.getAccountNonExpired()))
-                .accountLocked(!Boolean.TRUE.equals(userProjection.getAccountNonLocked()))
-                .credentialsExpired(!Boolean.TRUE.equals(userProjection.getCredentialsNonExpired()))
-                .disabled(!Boolean.TRUE.equals(userProjection.getEnabled()))
-                .build();
+        return new ApiUserDetail(
+                userProjection.getId(),
+                userProjection.getUsername(),
+                userProjection.getPassword(),
+                parseRoles(userProjection.getRoles()),
+                Boolean.TRUE.equals(userProjection.getAccountNonExpired()),
+                Boolean.TRUE.equals(userProjection.getAccountNonLocked()),
+                Boolean.TRUE.equals(userProjection.getCredentialsNonExpired()),
+                Boolean.TRUE.equals(userProjection.getEnabled())
+        );
     }
     
     /**

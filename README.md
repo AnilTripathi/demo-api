@@ -187,8 +187,12 @@ curl -H "Authorization: Bearer <TOKEN>" \
 curl -X POST http://localhost:8089/api/auth/refresh \
   -H "Content-Type: application/json" \
   -d '{
+    "accessToken": "<ACCESS_TOKEN>",
     "refreshToken": "<REFRESH_TOKEN>"
   }'
+
+# Note: Access token can be expired - only signature is validated
+# Refresh token must be valid and not expired
 ```
 
 #### Logout
@@ -290,6 +294,9 @@ configuration.setAllowedOrigins(Arrays.asList(
 ### Security Features
 
 - **JWT Authentication**: Stateless authentication with access/refresh tokens
+  - JWT subject uses `userId` (UUID) instead of username
+  - Custom `ApiUserDetail` principal with `id` and `username`
+  - Refresh endpoint accepts expired access tokens (signature validation only)
 - **BCrypt Password Encoding**: Secure password hashing
 - **CORS Support**: Configurable cross-origin resource sharing
 - **Role-based Access Control**: User roles and permissions

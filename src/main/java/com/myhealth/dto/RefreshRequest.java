@@ -7,6 +7,9 @@ import lombok.Data;
 @Schema(description = "Refresh token request payload")
 public class RefreshRequest {
     
+    @Schema(description = "Access token (can be expired) for user identification", required = true)
+    private String accessToken;
+    
     @Schema(description = "Refresh token to generate new access token", example = "550e8400-e29b-41d4-a716-446655440000", required = true)
     private String refreshToken;
 }

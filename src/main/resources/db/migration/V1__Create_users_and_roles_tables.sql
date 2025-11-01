@@ -1,17 +1,13 @@
--- Create schema
-CREATE SCHEMA IF NOT EXISTS myhealth_schema;
-SET search_path TO myhealth_schema;
-
 -- ROLES TABLE
 CREATE TABLE roles (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,  -- e.g. ROLE_USER, ROLE_ADMIN
     description VARCHAR(255)
 );
 
 -- USER_PROFILE (Parent Table)
 CREATE TABLE user_profile (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     first_name VARCHAR(100),
     last_name VARCHAR(100),
@@ -67,7 +63,7 @@ CREATE TABLE user_roles (
 
 -- USER_TOKENS TABLE
 CREATE TABLE user_tokens (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY,
     user_id UUID NOT NULL,
     refresh_token VARCHAR(255) NOT NULL UNIQUE,
     expires_at TIMESTAMP NOT NULL,

@@ -1,28 +1,35 @@
 package com.myhealth.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
+import java.util.function.Supplier;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfig {
     
     private final UserDetailsService userDetailsService;
@@ -55,7 +62,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/api/user/**").authenticated()
+                .requestMatchers("/api/user/**").access(createContainsRoleAuthorizationManager("USER", "ADMIN"))
+                .requestMatchers("/api/admin/**").access(createContainsRoleAuthorizationManager("ADMIN"))
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())
@@ -110,5 +118,67 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+    
+    /**
+     * Creates a contains-based authorization manager that grants access if ANY granted authority
+     * contains one of the target keywords (case-insensitive).
+     * 
+     * This replaces hasAnyRole enumeration and supports flexible role matching:
+     * - ROLE_USER, ROLE_ADMIN, ROLE_SUPER_ADMIN
+     * - USER_MANAGER, ADMIN_VIEWER, etc.
+     * 
+     * For /api/user/**: allows roles containing "USER" or "ADMIN" (admins inherit user access)
+     * For /api/admin/**: allows roles containing "ADMIN" only
+     * 
+     * @param targetKeywords the keywords to search for in authority names
+     * @return AuthorizationManager that performs contains-based role checking
+     */
+    private AuthorizationManager<RequestAuthorizationContext> createContainsRoleAuthorizationManager(String... targetKeywords) {
+        return new ContainsRoleAuthorizationManager(targetKeywords);
+    }
+    
+    /**
+     * Custom AuthorizationManager that checks if any granted authority contains
+     * one of the specified keywords (case-insensitive).
+     */
+    private static class ContainsRoleAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
+        
+        private final String[] targetKeywords;
+        
+        public ContainsRoleAuthorizationManager(String... targetKeywords) {
+            this.targetKeywords = targetKeywords != null ? targetKeywords : new String[0];
+        }
+        
+        @Override
+        public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext context) {
+            Authentication auth = authentication.get();
+            
+            // Require authentication
+            if (auth == null || !auth.isAuthenticated()) {
+                log.debug("Access denied: User not authenticated for path: {}", context.getRequest().getRequestURI());
+                return new AuthorizationDecision(false);
+            }
+            
+            // Check if any authority contains one of the target keywords
+            for (GrantedAuthority authority : auth.getAuthorities()) {
+                String authorityName = authority.getAuthority();
+                if (authorityName != null) {
+                    String normalizedAuthority = authorityName.trim().toUpperCase();
+                    
+                    for (String keyword : targetKeywords) {
+                        if (keyword != null && normalizedAuthority.contains(keyword.toUpperCase())) {
+                            log.debug("Access granted: Authority '{}' contains keyword '{}' for path: {}", 
+                                    authorityName, keyword, context.getRequest().getRequestURI());
+                            return new AuthorizationDecision(true);
+                        }
+                    }
+                }
+            }
+            
+            log.debug("Access denied: No authority contains required keywords {} for user '{}' on path: {}", 
+                    Arrays.toString(targetKeywords), auth.getName(), context.getRequest().getRequestURI());
+            return new AuthorizationDecision(false);
+        }
     }
 }

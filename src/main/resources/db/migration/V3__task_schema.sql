@@ -1,6 +1,3 @@
--- UUIDs
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 -- --- Lookups ---
 CREATE TABLE priorities (
   id   SMALLINT PRIMARY KEY,              -- 1..5
@@ -21,7 +18,7 @@ ON CONFLICT DO NOTHING;
 
 -- --- Tasks ---
 CREATE TABLE tasks (
-  id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id               UUID PRIMARY KEY,
   account_id       UUID,
   parent_task_id   UUID REFERENCES tasks(id) ON DELETE CASCADE,
   title            TEXT NOT NULL,
@@ -52,7 +49,7 @@ CREATE INDEX idx_tasks_search  ON tasks USING GIN (to_tsvector('simple', coalesc
 
 -- --- Labels ---
 CREATE TABLE labels (
-  id     UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id     UUID PRIMARY KEY,
   name   TEXT NOT NULL,
   color  TEXT,
   UNIQUE (name)
@@ -74,13 +71,13 @@ CREATE TABLE task_dependencies (
 
 -- --- Checklists ---
 CREATE TABLE checklists (
-  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id          UUID PRIMARY KEY,
   task_id     UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
   title       TEXT,
   order_index BIGINT NOT NULL DEFAULT 0
 );
 CREATE TABLE checklist_items (
-  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id            UUID PRIMARY KEY,
   checklist_id  UUID NOT NULL REFERENCES checklists(id) ON DELETE CASCADE,
   content       TEXT NOT NULL,
   is_done       BOOLEAN NOT NULL DEFAULT FALSE,
@@ -90,7 +87,7 @@ CREATE TABLE checklist_items (
 
 -- --- Comments ---
 CREATE TABLE comments (
-  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id          UUID PRIMARY KEY,
   task_id     UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
   author_name TEXT,
   body_md     TEXT NOT NULL,
@@ -101,7 +98,7 @@ CREATE INDEX idx_comments_task ON comments(task_id);
 
 -- --- Attachments ---
 CREATE TABLE attachments (
-  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id           UUID PRIMARY KEY,
   task_id      UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
   filename     TEXT NOT NULL,
   mime_type    TEXT,
@@ -112,7 +109,7 @@ CREATE TABLE attachments (
 
 -- --- Reminders ---
 CREATE TABLE reminders (
-  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  id         UUID PRIMARY KEY,
   task_id    UUID NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
   remind_at  TIMESTAMPTZ NOT NULL,
   channel    TEXT NOT NULL CHECK (channel IN ('local','push','email','sms','webhook')),

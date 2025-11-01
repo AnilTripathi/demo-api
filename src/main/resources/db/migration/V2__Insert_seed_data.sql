@@ -17,9 +17,9 @@ INSERT INTO user_profile (id, email, first_name, last_name, display_name, phone_
 
 -- Insert users (password is 'password' encoded with BCrypt)
 INSERT INTO users (id, username, password, enabled, account_non_expired, account_non_locked, credentials_non_expired, failed_attempts, created_at, updated_at) VALUES 
-('550e8400-e29b-41d4-a716-446655440003', 'admin', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', true, true, true, true, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('550e8400-e29b-41d4-a716-446655440004', 'user', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', true, true, true, true, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-('550e8400-e29b-41d4-a716-446655440008', 'superadmin', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.', true, true, true, true, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+('550e8400-e29b-41d4-a716-446655440003', 'admin', '$2a$12$WDXBnJVyz7hX//3koasmneRaddbG6RsEM7l.oxJm0LFKvUTKcjRse', true, true, true, true, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('550e8400-e29b-41d4-a716-446655440004', 'user', '$2a$12$WDXBnJVyz7hX//3koasmneRaddbG6RsEM7l.oxJm0LFKvUTKcjRse', true, true, true, true, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+('550e8400-e29b-41d4-a716-446655440008', 'superadmin', '$2a$12$WDXBnJVyz7hX//3koasmneRaddbG6RsEM7l.oxJm0LFKvUTKcjRse', true, true, true, true, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Assign roles to users
 INSERT INTO user_roles (user_id, role_id) VALUES 
