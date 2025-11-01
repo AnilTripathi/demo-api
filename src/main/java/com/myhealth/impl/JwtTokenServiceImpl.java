@@ -76,6 +76,9 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     
     @Override
     public Claims parseClaimsIgnoreExpiration(String token) {
+        if (token == null || token.trim().isEmpty()) {
+            throw new JwtException("Token cannot be null or empty");
+        }
         try {
             return Jwts.parser()
                     .verifyWith(getSigningKey())
@@ -113,6 +116,9 @@ public class JwtTokenServiceImpl implements JwtTokenService {
     
     @Override
     public boolean validateTokenSignature(String token) {
+        if (token == null || token.trim().isEmpty()) {
+            return false;
+        }
         try {
             parseClaimsIgnoreExpiration(token);
             return true;

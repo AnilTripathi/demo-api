@@ -49,7 +49,7 @@ class UserTaskControllerTest {
         task.setTitle("Test Task");
         
         Page<UserTaskResponse> page = new PageImpl<>(List.of(task));
-        when(userTaskService.getUserTasks(eq(userId), any(), any(), any(), any(), any()))
+        when(userTaskService.getUserTasks(any(), any(), any(), any(), any()))
             .thenReturn(page);
         
         // When & Then
@@ -73,7 +73,7 @@ class UserTaskControllerTest {
         response.setId(UUID.randomUUID());
         response.setTitle("New Task");
         
-        when(userTaskService.createTask(eq(userId), any(UserTaskCreateRequest.class)))
+        when(userTaskService.createTask(any(UserTaskCreateRequest.class)))
             .thenReturn(response);
         
         // When & Then
@@ -108,7 +108,7 @@ class UserTaskControllerTest {
         UUID userId = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
         UUID taskId = UUID.randomUUID();
         
-        doNothing().when(userTaskService).deleteTask(userId, taskId);
+        doNothing().when(userTaskService).deleteTask(taskId);
         
         // When & Then
         mockMvc.perform(delete("/api/user/task/{id}", taskId)
@@ -131,7 +131,7 @@ class UserTaskControllerTest {
         response.setStatusId((short) 5);
         response.setCompletedAt(ZonedDateTime.now());
         
-        when(userTaskService.changeTaskStatus(eq(userId), eq(taskId), eq((short) 5)))
+        when(userTaskService.changeTaskStatus(eq(taskId), eq((short) 5)))
             .thenReturn(response);
         
         // When & Then
