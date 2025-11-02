@@ -101,6 +101,36 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
     }
     
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ApiError> handleDuplicateResourceException(DuplicateResourceException ex, WebRequest request) {
+        log.error("Duplicate Resource Exception: {}", ex.getMessage());
+        
+        ApiError apiError = new ApiError(
+            LocalDateTime.now(),
+            HttpStatus.CONFLICT.value(),
+            request.getDescription(false).replace("uri=", ""),
+            ex.getMessage(),
+            Collections.singletonList("DUPLICATE_RESOURCE")
+        );
+        
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(apiError);
+    }
+    
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiError> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+        log.error("Resource Not Found Exception: {}", ex.getMessage());
+        
+        ApiError apiError = new ApiError(
+            LocalDateTime.now(),
+            HttpStatus.NOT_FOUND.value(),
+            request.getDescription(false).replace("uri=", ""),
+            ex.getMessage(),
+            Collections.singletonList("RESOURCE_NOT_FOUND")
+        );
+        
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+    }
+    
     @ExceptionHandler(org.springframework.web.server.ResponseStatusException.class)
     public ResponseEntity<ApiError> handleResponseStatusException(org.springframework.web.server.ResponseStatusException ex, WebRequest request) {
         log.error("Response Status Exception: {}", ex.getMessage());
