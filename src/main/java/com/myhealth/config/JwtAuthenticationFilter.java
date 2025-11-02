@@ -8,6 +8,7 @@ import com.myhealth.security.ApiUserDetail;
 import com.myhealth.service.JwtTokenService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
+import java.util.Arrays;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -43,8 +45,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, 
                                   FilterChain filterChain) throws ServletException, IOException {
         try {
+            List<String> publicEndpoint = Arrays.asList("/api/auth/login", "/api/auth/refresh");
+            String path = request.getRequestURI();
             String jwt = parseJwt(request);
             if (jwt != null) {
+                if (publicEndpoint.contains(path)) {
+                    filterChain.doFilter(request, response);
+                    return;
+                }
                 UUID userId = jwtTokenService.getUserId(jwt);
                 User user = userRepository.findById(userId)
                         .orElseThrow(() -> new RuntimeException("User not found"));

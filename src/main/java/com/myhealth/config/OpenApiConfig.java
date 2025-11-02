@@ -55,13 +55,15 @@ public class OpenApiConfig {
                         new Server().url("https://staging.myhealth.com").description("Staging server"),
                         new Server().url("https://api.myhealth.com").description("Production server")
                 ))
-                .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
-                .components(new Components()
-                        .addSecuritySchemes("Bearer Authentication", 
-                                new SecurityScheme()
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("bearer")
-                                        .bearerFormat("JWT")
-                                        .description("JWT token for API authentication")));
+                .addSecurityItem(new SecurityRequirement().
+                        addList("bearerAuth"))
+                .components(new Components().addSecuritySchemes
+                        ("bearerAuth", createAPIKeyScheme()));
+    }
+    private SecurityScheme createAPIKeyScheme() {
+        return new SecurityScheme().type(SecurityScheme.Type.HTTP)
+                .bearerFormat("JWT")
+                .scheme("bearer")
+                .description("JWT token for API authentication");
     }
 }
