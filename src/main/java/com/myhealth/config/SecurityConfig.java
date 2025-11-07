@@ -60,9 +60,9 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/auth/**","/actuator/health","/actuator/info").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/api/user/**").access(createContainsRoleAuthorizationManager("USER", "ADMIN"))
+                .requestMatchers("/api/users/**").access(createContainsRoleAuthorizationManager("USER", "ADMIN"))
                 .requestMatchers("/api/admin/**").access(createContainsRoleAuthorizationManager("ADMIN"))
                 .anyRequest().authenticated()
             )

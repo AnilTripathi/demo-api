@@ -342,6 +342,7 @@ docker run -p 8089:8089 -e SPRING_PROFILES_ACTIVE=test myhealth-api
 
 - **Unit Tests**: `src/test/java/com/myhealth/`
 - **Integration Tests**: Use `@SpringBootTest` with test profile
+- **Smoke Tests**: `src/smokeTest/` - Fast BDD tests with Cucumber
 - **Test Database**: H2 in-memory database
 
 ### Run Tests
@@ -356,16 +357,81 @@ docker run -p 8089:8089 -e SPRING_PROFILES_ACTIVE=test myhealth-api
 # Integration tests only
 ./mvnw test -Dtest="*IntegrationTest"
 
+# Smoke tests only (fast BDD suite)
+./mvnw test -Psmoke-tests
+
 # With coverage
 ./mvnw test jacoco:report
 ```
+
+### Smoke Tests (Cucumber BDD)
+
+Fast end-to-end verification using Behavior-Driven Development against a **running application**:
+
+```bash
+# Run against local application (default: http://localhost:8089)
+./run-smoke-tests.sh
+
+# Run against custom URL
+./run-smoke-tests.sh http://localhost:8080
+
+# Run manually with environment variable
+export APP_BASE_URL=http://localhost:8089
+mvn test -Psmoke-tests
+
+# Run with system property
+mvn test -Psmoke-tests -Dapp.url=http://localhost:8089
+```
+
+**Important:** Smoke tests do NOT start the Spring Boot application. The application must be running externally.
+
+**Features Covered:**
+- Health endpoints (`/actuator/health`, `/actuator/info`)
+- Authentication flow (login, registration, tokens)
+- User profile management (get profile, authorization)
+- Admin access control (role-based security)
+
+**Technical Details:**
+- Uses RestAssured for HTTP calls (no Spring Boot context)
+- Lightweight execution - no database or application startup
+- Configurable base URL via environment variables or system properties
+- Automatic health check before running tests
+
+**Execution Time:** < 30 seconds
 
 ### Test Profiles
 
 ```bash
 # Run with test profile
-./mvnw test -Dspring.profiles.active=test
+mvn test -Dspring.profiles.active=test
+
+# Run smoke tests against external application
+mvn test -Psmoke-tests
 ```
+
+### Running Smoke Tests Against External Application
+
+The smoke tests are designed to run against an already-running application instance:
+
+```bash
+# 1. Start the application externally
+java -jar target/myhealth-0.0.1-SNAPSHOT.jar --spring.profiles.active=test
+
+# 2. In another terminal, run smoke tests
+./run-smoke-tests.sh
+
+# Or with Docker
+docker run -d -p 8089:8089 -e SPRING_PROFILES_ACTIVE=test myhealth-api:latest
+./run-smoke-tests.sh
+
+# Or against different environment
+./run-smoke-tests.sh https://staging.myhealth.com
+```
+
+**Configuration Options:**
+- `APP_BASE_URL` environment variable
+- `app.url` system property  
+- Default: `http://localhost:8089`
 
 ## Troubleshooting
 
